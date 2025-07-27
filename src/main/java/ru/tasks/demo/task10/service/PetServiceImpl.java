@@ -7,6 +7,7 @@ import ru.tasks.demo.task10.domain.PetKind;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PetServiceImpl implements PetService {
@@ -26,6 +27,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public synchronized boolean adoptPet(String name) {
+        if (Objects.isNull(name)) throw new IllegalArgumentException("name should not be null");
         final Optional<Pet> pet = petDao.getPetByName(name);
         if (pet.isPresent() && !pet.get().isAdopted()) {
             pet.get().setAdopted(true);
